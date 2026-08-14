@@ -1,13 +1,13 @@
 package com.billflow.dto.response;
 
-public class RegisterResponse {
+public class LoginResponse {
     private String message;
 
-    public RegisterResponse(String message){
+    public LoginResponse(String message){
         this.message = message;
     }
 
     public String getMessage(){
-        return message;
+        return this.message;
     }
 }

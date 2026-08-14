@@ -1,2 +1,5 @@
-package com.billflow.enums;public enum TenantStatus {
+package com.billflow.enums;
+public enum TenantStatus {
+    ACTIVE,
+    INACTIVE
 }

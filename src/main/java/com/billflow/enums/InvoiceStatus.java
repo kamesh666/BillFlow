@@ -1,2 +1,5 @@
-package com.billflow.enums;public enum InvoiceStatus {
+package com.billflow.enums;
+
+public enum InvoiceStatus {
+    
 }

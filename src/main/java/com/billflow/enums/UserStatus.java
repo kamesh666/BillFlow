@@ -1,2 +1,7 @@
-package com.billflow.enums;public class UserStatus {
+package com.billflow.enums;
+
+public enum UserStatus {
+    ACTIVE,
+    INACTIVE,
+    LOCKED
 }

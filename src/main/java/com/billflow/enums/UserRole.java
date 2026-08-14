@@ -1,6 +1,6 @@
 package com.billflow.enums;
 
-public enum RoleType {
+public enum UserRole {
     ADMIN,
     ACCOUNTANT,
     EMPLOYEE
