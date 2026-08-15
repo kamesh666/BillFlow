@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Tenant extends BaseEntity {
-    
+
     private String companyName;
     private String companyEmail;
     private String companyPhone;

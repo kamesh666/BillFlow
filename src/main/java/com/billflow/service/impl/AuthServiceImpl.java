@@ -26,10 +26,10 @@ public class AuthServiceImpl implements AuthService {
     private final JwtService jwtService;
 
     public AuthServiceImpl(
-        TenantRepository tenantRepository,
-        UserRepository userRepository,
-        PasswordEncoder passwordEncoder,
-        JwtService jwtService
+            TenantRepository tenantRepository,
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder,
+            JwtService jwtService
     ){
         this.tenantRepository = tenantRepository;
         this.userRepository = userRepository;
@@ -46,7 +46,7 @@ public class AuthServiceImpl implements AuthService {
         if(tenantRepository.existsByCompanyEmail(request.getCompanyEmail())){
             throw new RuntimeException("Company email is already exists");
         }
-        
+
         Tenant tenant = new Tenant();
         tenant.setCompanyName(request.getCompanyName());
         tenant.setCompanyEmail(request.getCompanyEmail());
@@ -82,11 +82,11 @@ public class AuthServiceImpl implements AuthService {
 
         String token = jwtService.generateToken(user);
         return new LoginResponse(
-            token,
-            "Login Successful",
-            user.getTenant().getId(),
-            user.getTenant().getCompanyName(),
-            user.getRole().name()
+                token,
+                "Login Successful",
+                user.getTenant().getId(),
+                user.getTenant().getCompanyName(),
+                user.getRole().name()
         );
     }
 }

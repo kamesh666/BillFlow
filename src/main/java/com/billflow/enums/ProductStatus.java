@@ -1,7 +1,7 @@
 package com.billflow.enums;
 
-public enum UserStatus {
+public enum ProductStatus {
     ACTIVE,
     INACTIVE,
-    LOCKED
+    DELETED
 }

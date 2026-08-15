@@ -1,7 +1,5 @@
 package com.billflow.entity;
 
-import org.hibernate.annotations.ManyToAny;
-
 import com.billflow.enums.UserRole;
 import com.billflow.enums.UserStatus;
 
@@ -15,7 +13,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import tools.jackson.databind.annotation.EnumNaming;
 
 @Entity
 @Table(name = "users")

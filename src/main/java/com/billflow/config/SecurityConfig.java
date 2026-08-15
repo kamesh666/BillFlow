@@ -23,11 +23,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/auth/register","/api/v1/auth/login").permitAll()
-                .anyRequest().authenticated()
-            ).httpBasic(Customizer.withDefaults());
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/v1/auth/register","/api/v1/auth/login").permitAll()
+                        .anyRequest().authenticated()
+                ).httpBasic(Customizer.withDefaults());
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
@@ -39,7 +39,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(
-        AuthenticationConfiguration configuration
+            AuthenticationConfiguration configuration
     ) throws Exception{
         return configuration.getAuthenticationManager();
     }

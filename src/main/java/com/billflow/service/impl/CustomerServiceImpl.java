@@ -2,6 +2,7 @@ package com.billflow.service.impl;
 
 import java.util.List;
 
+import com.billflow.security.TenantContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -22,19 +23,22 @@ import jakarta.transaction.Transactional;
 public class CustomerServiceImpl implements CustomerService{
     private final TenantRepository tenantRepository;
     private final CustomerRepository customerRepository;
+    private final TenantContext tenantContext;
 
     public CustomerServiceImpl(
         TenantRepository tenantRepository,
-        CustomerRepository customerRepository
+        CustomerRepository customerRepository,
+        TenantContext tenantContext
     ) {
         this.tenantRepository = tenantRepository;
         this.customerRepository = customerRepository;
+        this.tenantContext = tenantContext;
     }
 
     @Transactional
     @Override
     public CustomerResponse createCustomer(CustomerRequest request){
-        Long tenantId = getCurrentTenantId();
+        Long tenantId = tenantContext.getCurrentTenantId();
         Tenant tenant = tenantRepository.findById(tenantId)
             .orElseThrow(()-> new RuntimeException("Tenant not found"));
         Customer customer = new Customer();
@@ -57,19 +61,9 @@ public class CustomerServiceImpl implements CustomerService{
         );
     }
 
-    private Long getCurrentTenantId(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null || !(authentication.getPrincipal() instanceof CustomUserDetails userDetails)) {
-            throw new RuntimeException("User not authenticated");
-        }
-
-        return userDetails.getTenantId();
-    }
-
     @Override
     public List<CustomerResponse> getAllCustomers(){
-        Long tenantId = getCurrentTenantId();
+        Long tenantId = tenantContext.getCurrentTenantId();
 
         Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(()-> new RuntimeException("Tenant not found"));
 
@@ -88,7 +82,7 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public CustomerResponse getCustomerById(Long id){
-        Long tenantId = getCurrentTenantId();
+        Long tenantId = tenantContext.getCurrentTenantId();
         Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(()-> new RuntimeException("Tenant not found"));
 
        Customer customer = customerRepository
@@ -108,7 +102,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Transactional
     @Override
     public CustomerResponse updateCustomer(Long id, CustomerRequest request){
-        Long tenantId = getCurrentTenantId();
+        Long tenantId = tenantContext.getCurrentTenantId();
 
         Tenant tenant = tenantRepository.findById(tenantId)
             .orElseThrow(() -> new RuntimeException("Tenant not found"));
@@ -139,7 +133,7 @@ public class CustomerServiceImpl implements CustomerService{
 @Override
 public void deleteCustomer(Long id) {
 
-    Long tenantId = getCurrentTenantId();
+    Long tenantId = tenantContext.getCurrentTenantId();
 
     Tenant tenant = tenantRepository.findById(tenantId)
             .orElseThrow(() -> new RuntimeException("Tenant not found"));

@@ -19,7 +19,7 @@ public class BaseEntity {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-     public Long getId() {
+    public Long getId() {
         return id;
     }
 
