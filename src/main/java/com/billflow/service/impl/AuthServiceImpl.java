@@ -3,7 +3,6 @@ package com.billflow.service.impl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.billflow.Security.JwtService;
 import com.billflow.dto.request.LoginRequest;
 import com.billflow.dto.request.RegisterRequest;
 import com.billflow.dto.response.LoginResponse;
@@ -15,6 +14,7 @@ import com.billflow.enums.UserRole;
 import com.billflow.enums.UserStatus;
 import com.billflow.repository.TenantRepository;
 import com.billflow.repository.UserRepository;
+import com.billflow.security.JwtService;
 import com.billflow.service.AuthService;
 
 @Service

@@ -1,6 +1,11 @@
 package com.billflow.entity;
 
+import com.billflow.enums.CustomerStatus;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -18,6 +23,12 @@ public class Customer extends BaseEntity {
     private String email;
     private String address;
     private String gstNumber;
+
+    @Column(nullable = false)
+    private Boolean deleted = false;
+
+    @Enumerated(EnumType.STRING)
+    private CustomerStatus status = CustomerStatus.ACTIVE;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tenant_id",nullable = false)

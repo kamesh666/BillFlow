@@ -1,4 +1,4 @@
-package com.billflow.Security;
+package com.billflow.security;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,10 +21,6 @@ public class CustemUserDetailsService implements UserDetailsService {
         User user = userRepository.findByEmail(email)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         
-        return org.springframework.security.core.userdetails.User
-            .withUsername(user.getEmail())
-            .password(user.getPassword())
-            .roles(user.getRole().name())
-            .build();
+        return new CustomUserDetails(user);
     }
 }
