@@ -11,6 +11,8 @@ import com.billflow.service.ProductService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductServiceImpl implements ProductService {
     private final TenantRepository tenantRepository;
@@ -49,5 +51,14 @@ public class ProductServiceImpl implements ProductService {
                 product.getPurchasePrice(),
                 product.getTaxRate()
         );
+    }
+
+    @Override
+    public List<ProductResponse> getAllProducts(){
+        Long tenantId = tenantContext.getCurrentTenantId();
+
+        Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(()-> new RuntimeException("Tenant not found"));
+
+        return productRepository.
     }
 }
