@@ -1,13 +1,10 @@
 package com.billflow.dto.response;
 
-public class LoginResponse {
-    private String message;
-
-    public LoginResponse(String message){
-        this.message = message;
-    }
-
-    public String getMessage(){
-        return this.message;
-    }
+public record LoginResponse(
+    String token,
+    String message,
+    Long tenantId,
+    String companyName,
+    String role
+) {
 }

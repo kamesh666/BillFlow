@@ -3,6 +3,7 @@ package com.billflow.service.impl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.billflow.Security.JwtService;
 import com.billflow.dto.request.LoginRequest;
 import com.billflow.dto.request.RegisterRequest;
 import com.billflow.dto.response.LoginResponse;
@@ -22,15 +23,18 @@ public class AuthServiceImpl implements AuthService {
     private final TenantRepository tenantRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     public AuthServiceImpl(
         TenantRepository tenantRepository,
         UserRepository userRepository,
-        PasswordEncoder passwordEncoder
+        PasswordEncoder passwordEncoder,
+        JwtService jwtService
     ){
         this.tenantRepository = tenantRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
     @Override
     public RegisterResponse register(RegisterRequest request){
@@ -75,6 +79,14 @@ public class AuthServiceImpl implements AuthService {
         if (user.getStatus() != UserStatus.ACTIVE) {
             throw new RuntimeException("Account is inactive");
         }
-        return new LoginResponse("Login Successful");
+
+        String token = jwtService.generateToken(user);
+        return new LoginResponse(
+            token,
+            "Login Successful",
+            user.getTenant().getId(),
+            user.getTenant().getCompanyName(),
+            user.getRole().name()
+        );
     }
 }
